@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin');
+
+:root{
+    --color-aqua: aqua;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f2f2f2;
+    font-family: "Lato";
+    font-weight: 300;
+    font-size: 25px;
+    color: #555;
+    font-family: "Ubuntu";
+    text-align: justify;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Russo One";
+    font-weight: 1200;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 15px;
+    font-size: 50px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+p {
+    font-family: "Ubuntu";
+    font-size: 24px;
+    text-align: center;
+    text-indent: 2em;
+    margin-top: 55px;
+    margin-bottom: 55px;
+}
+
+.main_welcome {
+    display: flex;
+    margin: auto;
+    margin-top: 30px;
+    margin-bot: 25px;
+    flex-direction: column;
+    background-size: cover;
+    background-position: 50% 50%;
+    max-width: 1050px;
+    min-height: 100vh;
+}
+
+.main_content {
+    min-height: 70vh;
+}
+
+.page {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top: auto;
+}
+
+.main_center {
+    margin: 0;
+    display: flex;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+
+.about_left {
+    margin: auto 0;
+    margin-right: 15px;
+}
+
+.about_right {
+    margin: auto;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 0 !important;
+    padding: 25px 0;
+
+}
+
+@media screen and (max-width: 1085px) {
+    .main_center {
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .about_left{
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .about_right {
+        margin: auto !important;
+    }
+}
+
+/* Header */
+
+header {
+    /*background-color: #070707;*/
+    background-color: #686868;
+    min-height: 65px;
+    margin-top: 0;
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.nav {
+    /*background-color: #070707;*/
+    background-color: #686868;
+}
+
+.nav-link {
+    color: white !important;
+    transition: all 0.3s;
+    position: relative;
+}
+.nav-item{
+    color: white;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    /*border-top-color: #ffdb7a;*/
+    border-top-color: aqua;
+    border-bottom-color: aqua;
+    transform: scale(0.1, 1);
+}
+
+.nav-link:hover {
+    letter-spacing: 2px;
+    color: aqua !important;
+}
+
+.nav-link:hover::before {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.3s;
+}
+
+.nav-link:hover::after {
+    opacity: 0;
+    transform: scale(0.1, 1);
+}
+
+/* Footer*/
+
+.footer {
+    position: relative;
+    bottom: 0;
+    background-color: #2d2d2d;
+    border-color: #2d2d2d;
+    min-height: 70px;
+    padding: 15px;
+    color: #FFF;
+    margin-top: 70px;
+}
+
+/*Form*/
+
+.welcome-form {
+    display: flex;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    padding-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 16px;
+}
+
+/* Pagination */
+
+.main_pagination{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
