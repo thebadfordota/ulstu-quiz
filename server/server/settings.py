@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'crispy_forms'
+    'crispy_forms',
     
     'main',
     'accounts',
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Change model
-# AUTH_USER_MODEL = 'accounts.Company'
+AUTH_USER_MODEL = 'accounts.AdvancedUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

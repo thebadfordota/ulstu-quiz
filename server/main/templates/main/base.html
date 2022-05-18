@@ -1,10 +1,92 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,
+          shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/all.css' %}"/>
+    <link rel="stylesheet" href="{% static 'main/css/styles.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'main/images/python.ico' %}" type="image/x-icon">
 </head>
 <body>
+<div class="page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand " href="{% url 'main:home' %}" style="color: white"><span
+                        style="color: aqua">ULSTU</span> Quiz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'main:home' %}">Все тесты</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                {% if not user.is_authenticated %}
+                                <a class="dropdown-item" href="">Войти</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="">Зарегистрироваться</a>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                <a class="dropdown-item" href="">Профиль</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="">Выйти</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main_welcome">
+        {% block content %}{% endblock %}
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example" class="main_pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% endif %}
 
+                <span class="current">
+            <li class="page-item"><a
+                    class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Дальше</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+    <div class="footer">
+        <p class="copyright" style="margin-bottom: 0; text-align: center;">&copy;ULSTU Quiz</p>
+        <p>Техподдержка: our.support@gmail.com</p>
+    </div>
+</div>
+<script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

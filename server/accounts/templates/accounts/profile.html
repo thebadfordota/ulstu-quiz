@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2>Профиль {{ user.username }}</h2>
+<table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+    <thead>
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Длительность</th>
+        <th scope="col">Дата появления</th>
+        <th scope="col">
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="">Добавить продукт
+            </button>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for el in user_info %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <!-- Icons -->
+        <td><a href="" class="fas fa-comment-medical fa-2x"></a></td>
+        <td><a href="" class="fas fa-pen-square fa-2x"></a></td>
+        <td><a href="" class="fas fa-backspace fa-2x"></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

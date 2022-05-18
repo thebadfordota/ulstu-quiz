@@ -1,5 +1,6 @@
 from django.db import models
 import django.utils.timezone
+from accounts.models import AdvancedUser
 
 
 class BaseModel(models.Model):
@@ -12,8 +13,9 @@ class BaseModel(models.Model):
 class Test(BaseModel):
     theme = models.CharField(max_length=100, verbose_name='Тема')
     name = models.CharField(max_length=100, verbose_name='Название')
-    author = models.CharField(max_length=100, verbose_name='Автор')
+    author = models.ForeignKey(AdvancedUser, on_delete=models.SET_NULL, null=True, max_length=100, verbose_name='Автор')
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
+    hide_test = models.BooleanField(default=False, blank=True, verbose_name='Скрыть тест')
 
     class Meta:
         verbose_name_plural = 'Тесты'
@@ -64,26 +66,26 @@ class StudyGroup(BaseModel):
         return f'{self.name}'
 
 
-class Student(BaseModel):
-    first_name = models.CharField(max_length=50, verbose_name='Имя')
-    last_name = models.CharField(max_length=50, verbose_name='Фамилия')
-    patronymic = models.CharField(null=True, blank=True, max_length=50, verbose_name='Отчество')
-    nickname = models.CharField(max_length=50, verbose_name='Ник в discord')
-    group_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE, verbose_name="Группа")
-
-    class Meta:
-        verbose_name_plural = 'Студенты'
-        verbose_name = 'Студент'
-        ordering = ['id']
-
-    def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.group_id}'
+# class Student(BaseModel):
+#     first_name = models.CharField(max_length=50, verbose_name='Имя')
+#     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
+#     patronymic = models.CharField(null=True, blank=True, max_length=50, verbose_name='Отчество')
+#     nickname = models.CharField(max_length=50, verbose_name='Ник в discord')
+#     group_id = models.ForeignKey(StudyGroup, on_delete=models.CASCADE, verbose_name="Группа")
+#
+#     class Meta:
+#         verbose_name_plural = 'Студенты'
+#         verbose_name = 'Студент'
+#         ordering = ['id']
+#
+#     def __str__(self):
+#         return f'{self.last_name} {self.first_name} {self.group_id}'
 
 
 class Result(BaseModel):
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
     test_id = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name="Студент")
+    student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")  # Подумать
     variant_answers = models.ManyToManyField(VariantAnswer, verbose_name='Варианты ответов')
 
     class Meta:
