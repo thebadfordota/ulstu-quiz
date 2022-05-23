@@ -22,7 +22,7 @@ class ProfileDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
         context['heading'] = 'Профиль'
-        return
+        return context
 
 
 class LoginView(View):
