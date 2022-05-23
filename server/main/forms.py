@@ -1,13 +1,20 @@
 from django import forms
-from .models import Test
+from .models import Test, Question
 
 
-class CreateTestForm(forms.ModelForm):
+class TestModelForm(forms.ModelForm):
     """
-    Форма для создания теста.
+    Форма для CRUD-операция с моделью Test.
     """
     class Meta:
         model = Test
         fields = '__all__'
 
 
+class QuestionModelForm(forms.ModelForm):
+    """
+    Форма для CRUD-операция с моделью Question.
+    """
+    class Meta:
+        model = Question
+        fields = '__all__'

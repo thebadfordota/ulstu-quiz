@@ -17,7 +17,7 @@ services:
   db:
     container_name: db
     hostname: db
-    image: postgres:12.0-alpine
+    image: postgres:14.0-alpine
     restart: on-failure
     env_file:
       - ./.env.dev
