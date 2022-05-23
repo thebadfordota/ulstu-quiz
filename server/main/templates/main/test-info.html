@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2>{{ heading }}</h2>
+<div class="main_center">
+    <div class="about_left" style="margin: auto; margin-top: 0; margin-right: 150px; ">
+        <img src='{% static "main/images/insurance-default-image.jpg" %}'
+             style="width: 250px; height: 250px; border-radius: 50%;">
+    </div>
+    <div class="about_right">
+        <div class="profile_info">
+
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Тема: {{ test_info.theme }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Название: {{ test_info.name }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Автор: {{ test_info.author_id }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Дата создания: {{ test_info.appearance_date }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <button type="button" class="btn btn-outline-success justify-content-between d-flex" style="width: 135px; height: 60px;
+margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:quest_list' test_id=test_info.pk %}'">
+                            Список вопросов
+                        </button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <button type="button" class="btn btn-outline-success justify-content-between d-flex" style="width: 135px; height: 60px;
+margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:update_test' pk=test_info.pk %}'">
+                            Обновить тест
+                        </button>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <button type="button" class="btn btn-outline-success justify-content-between d-flex" style="width: 135px; height: 60px;
+margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:delete_test' pk=test_info.pk %}'">
+                            Удалить тест
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h3>О тесте:</h3>
+<p style="text-align: center;"></p>
+{% endblock %}
