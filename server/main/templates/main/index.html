@@ -7,22 +7,22 @@
     {% for el in test_info %}
     <div class="col text-center">
         <div class="card border-primary mb-3" style="width: 20rem; margin: 0 auto;">
-            <a href="#"><img
+            <a href="{% url 'main:about_test' pk=el.pk %}"><img
                     src="{% static 'main/images/insurance-default-image.jpg' %}" class="card-img-top img-fluid">
             </a>
             <div class="card-body">
                 <h5 class="card-title">
-                    <a href="#" style="color: black;">{{ el.name }}</a>
+                    <a href="{% url 'main:about_test' pk=el.pk %}" style="color: black;">{{ el.name }}</a>
                 </h5>
             </div>
             <ul class="list-group list-group-flush" style="font-size: 19px;">
                 <li class="list-group-item">Тема: {{ el.theme }}</li>
-                <li class="list-group-item">Автор: {{ el.author }} мес.</li>
+                <li class="list-group-item">Автор: {{ el.author_id }}</li>
                 <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
             </ul>
             <div class="card-body mb-3">
                 <button type="button" class="btn btn-outline-primary" style="width: 110px; height: 60px;
-margin-top: 20px;" onclick="">Описание
+margin-top: 20px;" onclick="window.location.href='{% url 'main:about_test' pk=el.pk %}'">Описание
                 </button>
                 <button type="button" class="btn btn-outline-success" style="width: 135px; height: 60px;
 margin-top: 20px;" onclick="">Начать тест

@@ -1,6 +1,6 @@
 from django.db import models
 import django.utils.timezone
-from accounts.models import AdvancedUser
+from accounts.models import AdvancedUser, StudyGroup
 
 
 class BaseModel(models.Model):
@@ -17,6 +17,7 @@ class Test(BaseModel):
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
     hide_test = models.BooleanField(default=False, blank=True, verbose_name='Скрыть тест')
     image = models.ImageField(null=True, blank=True, verbose_name='Фотография теста')
+    group_id = models.ManyToManyField(StudyGroup, null=True, blank=True, verbose_name='Для следующих учебных групп')
 
     class Meta:
         verbose_name_plural = 'Тесты'
@@ -48,6 +49,21 @@ class Question(BaseModel):
         return f'Тест: {self.test_id} ID вопроса: {self.pk}'
 
 
+class Result(BaseModel):
+    appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
+    test_id = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
+    student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")  # Подумать
+    # variant_answers = models.ManyToManyField(VariantAnswer, verbose_name='Варианты ответов')
+
+    class Meta:
+        verbose_name_plural = 'Попытки прохождения'
+        verbose_name = 'Попытка прохождения'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'{self.appearance_date} {self.test_id} {self.student_id}'
+
+
 # class VariantAnswer(BaseModel):
 #     info = models.CharField(max_length=255, verbose_name='Содержание')
 #     correct = models.BooleanField(null=True, blank=True)
@@ -61,18 +77,6 @@ class Question(BaseModel):
 #     def __str__(self):
 #         return f'Вопрос: {self.question_id} ID варианта: {self.pk}'
 
-
-class StudyGroup(BaseModel):
-    name = models.CharField(max_length=50, verbose_name='Название')
-    tests = models.ManyToManyField(Test, verbose_name='Тесты')
-
-    class Meta:
-        verbose_name_plural = 'Группы'
-        verbose_name = 'Группа'
-        ordering = ['id']
-
-    def __str__(self):
-        return f'{self.name}'
 
 
 # class Student(BaseModel):
@@ -89,18 +93,3 @@ class StudyGroup(BaseModel):
 #
 #     def __str__(self):
 #         return f'{self.last_name} {self.first_name} {self.group_id}'
-
-
-class Result(BaseModel):
-    appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
-    test_id = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
-    student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")  # Подумать
-    # variant_answers = models.ManyToManyField(VariantAnswer, verbose_name='Варианты ответов')
-
-    class Meta:
-        verbose_name_plural = 'Попытки прохождения'
-        verbose_name = 'Попытка прохождения'
-        ordering = ['id']
-
-    def __str__(self):
-        return f'{self.appearance_date} {self.test_id} {self.student_id}'

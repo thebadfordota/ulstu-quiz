@@ -6,25 +6,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
-class TestCreateView(CreateView):
-    """
-    View для создания теста.
-    """
-    model = Test
-    template_name = 'main/form-template.html'
-    form_class = TestModelForm
-    # query_pk_and_slug = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Создать тест'
-        context['heading'] = 'Создать тест'
-        return context
-
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('main:quest_list', kwargs={'test_id': self.object.id})
-
-
 class TestListView(ListView):
     """
     View для отображения списка тестов.
@@ -43,6 +24,78 @@ class TestListView(ListView):
 
     def get_queryset(self):
         return Test.objects.filter(hide_test=False)
+
+
+class TestDetailView(DetailView):
+    """
+    View для просмотра информации о тесте.
+    """
+    model = Test
+    template_name = 'main/test-info.html'
+    context_object_name = "test_info"
+    query_pk_and_slug = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Тест'
+        context['heading'] = 'Тест'
+        return context
+
+
+class TestCreateView(CreateView):
+    """
+    View для создания теста.
+    """
+    model = Test
+    template_name = 'main/form-template.html'
+    form_class = TestModelForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Создать тест'
+        context['heading'] = 'Создать тест'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('main:quest_list', kwargs={'test_id': self.object.id})
+
+
+class TestUpdateView(UpdateView):
+    """
+    View для обновления информации о тесте.
+    """
+    model = Test
+    template_name = 'main/form-template.html'
+    form_class = TestModelForm
+    query_pk_and_slug = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Обновить тест'
+        context['heading'] = 'Обновить тест'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('main:about_test', kwargs={'pk': self.object.id})
+
+
+class TestDeleteView(DeleteView):
+    """
+    View для удаления теста.
+    """
+    model = Test
+    template_name = 'main/test-delete.html'
+    query_pk_and_slug = True
+    context_object_name = "test_info"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Удалить тест'
+        context['heading'] = 'Удалить тест'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('main:home')
 
 
 class QuestionListView(ListView):
@@ -94,8 +147,6 @@ class QuestionUpdateView(UpdateView):
     form_class = QuestionModelForm
     query_pk_and_slug = True
 
-    # query_pk_and_slug = True
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Обновить вопрос'
@@ -111,7 +162,7 @@ class QuestionDeleteView(DeleteView):
     View для удаления вопроса, принадлижащего к определённому тесту.
     """
     model = Question
-    template_name = 'main/delete-question.html'
+    template_name = 'main/question-delete.html'
     query_pk_and_slug = True
 
     def get_context_data(self, **kwargs):

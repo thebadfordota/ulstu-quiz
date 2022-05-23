@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h2>{{ heading }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <p>Вы действительно хотите удалить тест?</p>
+    <p>Тема: {{ test_info.theme }}</p>
+    <p>Название: {{ test_info.name }}</p>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <button type="button" class="btn btn-outline-primary"><a
+                href="{% url 'main:about_test' pk=object.pk %}">Отмена</a>
+        </button>
+    </div>
+</form>
+{% endblock content %}
