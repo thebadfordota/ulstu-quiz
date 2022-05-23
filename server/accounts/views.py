@@ -3,6 +3,7 @@ from .models import AdvancedUser
 from .forms import *
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -22,7 +23,7 @@ class ProfileDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
         context['heading'] = 'Профиль'
-        return
+        return context
 
 
 class LoginView(View):
@@ -57,7 +58,7 @@ class RegisterUserCreateView(CreateView):
     query_pk_and_slug = True
 
     def get_success_url(self):
-        return '/'
+        return reverse_lazy('main:home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

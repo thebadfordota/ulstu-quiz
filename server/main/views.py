@@ -42,6 +42,7 @@ class TestDetailView(DetailView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class TestCreateView(CreateView):
     """
     View для создания теста.
@@ -60,6 +61,7 @@ class TestCreateView(CreateView):
         return reverse_lazy('main:quest_list', kwargs={'test_id': self.object.id})
 
 
+@method_decorator(login_required, name='dispatch')
 class TestUpdateView(UpdateView):
     """
     View для обновления информации о тесте.
@@ -79,6 +81,7 @@ class TestUpdateView(UpdateView):
         return reverse_lazy('main:about_test', kwargs={'pk': self.object.id})
 
 
+@method_decorator(login_required, name='dispatch')
 class TestDeleteView(DeleteView):
     """
     View для удаления теста.
@@ -94,10 +97,11 @@ class TestDeleteView(DeleteView):
         context['heading'] = 'Удалить тест'
         return context
 
-    def get_success_url(self, **kwargs):
+    def get_success_url(self):
         return reverse_lazy('main:home')
 
 
+@method_decorator(login_required, name='dispatch')
 class QuestionListView(ListView):
     """
     View для отображения списка вопросов для определённого теста.
@@ -119,6 +123,7 @@ class QuestionListView(ListView):
         return Question.objects.filter(test_id=self.kwargs['test_id'])
 
 
+@method_decorator(login_required, name='dispatch')
 class QuestionCreateView(CreateView):
     """
     View для создания вопроса, принадлижащего к определённому тесту.
@@ -138,6 +143,7 @@ class QuestionCreateView(CreateView):
         return reverse_lazy('main:quest_list', kwargs={'test_id': self.kwargs['test_id']})
 
 
+@method_decorator(login_required, name='dispatch')
 class QuestionUpdateView(UpdateView):
     """
     View для обновления вопроса, принадлижащего к определённому тесту.
@@ -157,6 +163,7 @@ class QuestionUpdateView(UpdateView):
         return reverse_lazy('main:quest_list', kwargs={'test_id': self.kwargs['test_id']})
 
 
+@method_decorator(login_required, name='dispatch')
 class QuestionDeleteView(DeleteView):
     """
     View для удаления вопроса, принадлижащего к определённому тесту.
