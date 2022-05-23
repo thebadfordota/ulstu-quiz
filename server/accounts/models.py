@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# from main.models import StudyGroup
 
 
 class BaseModel(models.Model):
@@ -19,7 +18,6 @@ class AdvancedUser(AbstractUser):
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     patronymic = models.CharField(max_length=50, blank=True, verbose_name='Отчество')
-    # group_id = models.ForeignKey(StudyGroup, on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta(AbstractUser.Meta):
         verbose_name = "Пользователь"
@@ -32,7 +30,6 @@ class AdvancedUser(AbstractUser):
 
 class StudyGroup(BaseModel):
     name = models.CharField(max_length=50, verbose_name='Название')
-    # tests = models.ManyToManyField(Test, verbose_name='Тесты')
 
     class Meta:
         verbose_name_plural = 'Группы'
