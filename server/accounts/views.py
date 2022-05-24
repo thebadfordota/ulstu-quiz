@@ -133,8 +133,27 @@ class StudyGroupDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Удалить группу'
         context['heading'] = 'Удаление группы'
-        # context['test_id'] = self.kwargs['test_id']
         return context
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('accounts:group_list')
+
+
+class StudentListView(ListView):
+    """
+    View для списка студентов, относящихся к какой-либо группе.
+    """
+    paginate_by = 6
+    model = AdvancedUser
+    template_name = "main/student-list.html"
+    context_object_name = "student_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['form'] = ''
+        context['title'] = 'Все тесты'
+        context['heading'] = 'Все тесты'
+        return context
+
+    def get_queryset(self):
+        return AdvancedUser.objects.filter(group_id=self.kwargs['pk'])

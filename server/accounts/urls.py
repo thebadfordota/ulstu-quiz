@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import ProfileDetailView, LoginView, RegisterUserCreateView, StudyGroupListView, StudyGroupCreateView, \
-    StudyGroupUpdateView, StudyGroupDeleteView
+    StudyGroupUpdateView, StudyGroupDeleteView, StudentListView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -18,6 +18,8 @@ urlpatterns = [
     path('group/create/', StudyGroupCreateView.as_view(), name='create_group'),
     path('group/<slug:pk>/update/', StudyGroupUpdateView.as_view(), name='update_group'),
     path('group/<slug:pk>/delete/', StudyGroupDeleteView.as_view(), name='delete_group'),
+    path('group/<slug:pk>/student/list/', StudentListView.as_view(), name='student_list'),
+
 
 ]
 
