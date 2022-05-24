@@ -1,5 +1,5 @@
 from django import forms
-from .models import AdvancedUser
+from .models import AdvancedUser, StudyGroup
 
 
 class LoginForm(forms.ModelForm):
@@ -67,3 +67,13 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = AdvancedUser
         fields = ['username', 'password', 'confirm_password', 'email', 'first_name', 'last_name', 'patronymic', 'image']
+
+
+class StudyGroupModelForm(forms.ModelForm):
+    """
+    Форма для CRUD-операция с моделью StudyGroup.
+    """
+
+    class Meta:
+        model = StudyGroup
+        fields = '__all__'

@@ -1,6 +1,6 @@
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView, DetailView
 from .models import AdvancedUser, StudyGroup
-from .forms import *
+from .forms import LoginForm, RegisterForm, StudyGroupModelForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
@@ -83,5 +83,77 @@ class StudyGroupListView(ListView):
         context['heading'] = 'Все группы'
         return context
 
-    # def get_queryset(self):
-    #     return Test.objects.filter(hide_test=False)
+
+class StudyGroupCreateView(CreateView):
+    """
+    View для создания группы.
+    """
+    model = StudyGroup
+    template_name = 'main/form-template.html'
+    form_class = StudyGroupModelForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Создать группу'
+        context['heading'] = 'Создать группу'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('accounts:group_list')
+
+
+class StudyGroupUpdateView(UpdateView):
+    """
+    View для обновления информации о группе.
+    """
+    model = StudyGroup
+    template_name = 'main/form-template.html'
+    form_class = StudyGroupModelForm
+    query_pk_and_slug = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Обновить информацию о группе'
+        context['heading'] = 'Обновить информацию о группе'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('accounts:group_list')
+
+
+class StudyGroupDeleteView(DeleteView):
+    """
+    View для удаления группы.
+    """
+    model = StudyGroup
+    template_name = 'accounts/group-delete.html'
+    query_pk_and_slug = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Удалить группу'
+        context['heading'] = 'Удаление группы'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('accounts:group_list')
+
+
+class StudentListView(ListView):
+    """
+    View для списка студентов, относящихся к какой-либо группе.
+    """
+    paginate_by = 6
+    model = AdvancedUser
+    template_name = "main/student-list.html"
+    context_object_name = "student_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['form'] = ''
+        context['title'] = 'Все тесты'
+        context['heading'] = 'Все тесты'
+        return context
+
+    def get_queryset(self):
+        return AdvancedUser.objects.filter(group_id=self.kwargs['pk'])
