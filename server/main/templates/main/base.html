@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:group_list' %}">Все группы</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:group_list' %}">Все ученики</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,7 +51,7 @@
                                 <a class="dropdown-item" href="{% url 'accounts:register' %}">Зарегистрироваться</a>
                                 {% endif %}
                                 {% if user.is_authenticated %}
-                                <a class="dropdown-item" href="{% url 'accounts:profile' pk=user.id %}">Профиль</a>
+                                <a class="dropdown-item" href="{% url 'accounts:profile' %}">Профиль</a>
                                 {% endif %}
                                 {% if user.is_staff %}
                                 <a class="dropdown-item" href="{% url 'admin:index' %}">Админ панель</a>

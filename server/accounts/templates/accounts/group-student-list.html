@@ -9,21 +9,24 @@
         <th scope="col">Фамилия</th>
         <th scope="col">Имя</th>
         <th scope="col">Отчество</th>
+        <th scope="col">Логин</th>
         <th scope="col">
 
         </th>
     </tr>
     </thead>
     <tbody>
-    {% for el in group_info %}
+    {% for el in student_info %}
     <tr>
-        <td><a href="">{{ el.last_name }}</a></td>
+        <td><a href="{% url 'accounts:student_result_list' pk=el.pk %}">{{ el.last_name }}</a></td>
         <td><a href="">{{ el.first_name }}</a></td>
         <td><a href="">{{ el.patronymic }}</a></td>
+        <td><a href="">{{ el.username }}</a></td>
         <!-- Icons -->
+        <td><a href="" class="fas fa-pen-square fa-2x"></a>
         <td>
             <button type="button" class="btn btn-outline-primary"
-                    onclick="">
+                    onclick="window.location.href='{% url 'accounts:student_result_list' pk=el.pk %}'">
                 успеваемость
             </button>
         </td>
