@@ -139,20 +139,22 @@ class StudyGroupDeleteView(DeleteView):
         return reverse_lazy('accounts:group_list')
 
 
-class StudentListView(ListView):
+class GroupStudentListView(ListView):
     """
     View для списка студентов, относящихся к какой-либо группе.
     """
     paginate_by = 6
     model = AdvancedUser
-    template_name = "main/student-list.html"
+    template_name = "accounts/group-student-list.html"
     context_object_name = "student_info"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['form'] = ''
-        context['title'] = 'Все тесты'
-        context['heading'] = 'Все тесты'
+        group = StudyGroup.objects.filter(id=self.kwargs['pk']).first()
+        # print(group.name)
+        context['title'] = f'Ученики группы {group.name}'
+        context['heading'] = f'Ученики группы {group.name}'
         return context
 
     def get_queryset(self):
