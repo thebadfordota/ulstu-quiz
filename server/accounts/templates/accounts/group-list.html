@@ -9,7 +9,7 @@
         <th scope="col">Название группы</th>
         <th scope="col">
             <button type="button" class="btn btn-outline-primary"
-                    onclick="">
+                    onclick="window.location.href='{% url 'accounts:create_group' %}'">
                 Добавить группу
             </button>
         </th>
@@ -20,9 +20,9 @@
     <tr>
         <td>{{ el.name }}</td>
         <!-- Icons -->
-        <td><a href="" class="fas fa-pen-square fa-2x"></a>
+        <td><a href="{% url 'accounts:update_group' pk=el.pk %}" class="fas fa-pen-square fa-2x"></a>
         </td>
-        <td><a href="" class="fas fa-backspace fa-2x"></a></td>
+        <td><a href="{% url 'accounts:delete_group' pk=el.pk %}" class="fas fa-backspace fa-2x"></a></td>
     </tr>
     {% endfor %}
     </tbody>
