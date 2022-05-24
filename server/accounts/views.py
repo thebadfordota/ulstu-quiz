@@ -27,7 +27,7 @@ class ProfileListView(ListView):
         return context
 
     def get_queryset(self):
-        return AdvancedUser.objects.filter(id=self.request.user.id)
+        return AdvancedUser.objects.filter(id=self.request.user.id).first()
 
 
 class LoginView(View):
