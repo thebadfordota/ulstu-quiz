@@ -13,8 +13,8 @@ class StudyGroup(BaseModel):
     name = models.CharField(max_length=50, verbose_name='Название')
 
     class Meta:
-        verbose_name_plural = 'Группы'
-        verbose_name = 'Группа'
+        verbose_name_plural = 'Учебные группы'
+        verbose_name = ' Учебная группа'
         ordering = ['id']
 
     def __str__(self):

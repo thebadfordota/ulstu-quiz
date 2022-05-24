@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2> {{ heading }}</h2>
+<table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+    <thead>
+    <tr>
+        <th scope="col">Название группы</th>
+        <th scope="col">
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="">
+                Добавить группу
+            </button>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for el in group_info %}
+    <tr>
+        <td>{{ el.name }}</td>
+        <!-- Icons -->
+        <td><a href="" class="fas fa-pen-square fa-2x"></a>
+        </td>
+        <td><a href="" class="fas fa-backspace fa-2x"></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

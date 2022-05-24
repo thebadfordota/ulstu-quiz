@@ -1,5 +1,5 @@
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView, DetailView
-from .models import AdvancedUser
+from .models import AdvancedUser, StudyGroup
 from .forms import *
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
@@ -65,3 +65,23 @@ class RegisterUserCreateView(CreateView):
         context['title'] = 'Регистрация'
         context['heading'] = 'Зарегистрироваться'
         return context
+
+
+class StudyGroupListView(ListView):
+    """
+    View для списка групп.
+    """
+    paginate_by = 10
+    model = StudyGroup
+    template_name = "accounts/group-list.html"
+    context_object_name = "group_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ''
+        context['title'] = 'Все группы'
+        context['heading'] = 'Все группы'
+        return context
+
+    # def get_queryset(self):
+    #     return Test.objects.filter(hide_test=False)

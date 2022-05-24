@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProfileDetailView, LoginView, RegisterUserCreateView
+from .views import ProfileDetailView, LoginView, RegisterUserCreateView, StudyGroupListView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -12,6 +12,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterUserCreateView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(next_page='main:home'), name='logout'),
+
+    path('group/list/', StudyGroupListView.as_view(), name='group_list'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
