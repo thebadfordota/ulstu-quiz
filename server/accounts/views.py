@@ -154,9 +154,7 @@ class GroupStudentListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['form'] = ''
         group = StudyGroup.objects.filter(id=self.kwargs['pk']).first().name
-        # print(group.name)
         context['title'] = f'Ученики группы {group}'
         context['heading'] = f'Ученики группы {group}'
         return context
@@ -176,11 +174,10 @@ class StudentResultListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        group = AdvancedUser.objects.filter(id=self.kwargs['pk']).first().username
-        context['title'] = f'Ученик группы {group}'
-        context['heading'] = f'Ученик группы {group}'
+        student = AdvancedUser.objects.filter(id=self.kwargs['pk']).first()
+        context['title'] = f'{student.last_name} {student.first_name}'
+        context['heading'] = f'{student.last_name} {student.first_name}'
         return context
 
     def get_queryset(self):
-        # print(AdvancedUser.objects.filter(group_id=self.kwargs['pk']))
         return Result.objects.filter(student_id=self.kwargs['pk'])
