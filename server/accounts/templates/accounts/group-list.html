@@ -18,7 +18,7 @@
     <tbody>
     {% for el in group_info %}
     <tr>
-        <td><a href="{% url 'accounts:student_list' pk=el.pk %}">{{ el.name }}</a></td>
+        <td><a href="{% url 'accounts:group_student_list' pk=el.pk %}">{{ el.name }}</a></td>
         <!-- Icons -->
         <td><a href="{% url 'accounts:update_group' pk=el.pk %}" class="fas fa-pen-square fa-2x"></a>
         </td>

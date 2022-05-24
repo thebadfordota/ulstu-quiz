@@ -1,5 +1,6 @@
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView, DetailView
 from .models import AdvancedUser, StudyGroup
+from main.models import Result
 from .forms import LoginForm, RegisterForm, StudyGroupModelForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
@@ -162,3 +163,24 @@ class GroupStudentListView(ListView):
 
     def get_queryset(self):
         return AdvancedUser.objects.filter(group_id=self.kwargs['pk'])
+
+
+class StudentResultListView(ListView):
+    """
+    View для просмотра всех результатов тестирования для определённого ученика.
+    """
+    paginate_by = 6
+    model = Result
+    template_name = "accounts/student-result.html"
+    context_object_name = "result_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        group = AdvancedUser.objects.filter(id=self.kwargs['pk']).first().username
+        context['title'] = f'Ученик группы {group}'
+        context['heading'] = f'Ученик группы {group}'
+        return context
+
+    def get_queryset(self):
+        # print(AdvancedUser.objects.filter(group_id=self.kwargs['pk']))
+        return Result.objects.filter(student_id=self.kwargs['pk'])
