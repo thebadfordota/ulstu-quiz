@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 @method_decorator(login_required, name='dispatch')
-class ProfileDetailView(DetailView):
+class ProfileListView(ListView):
     """
     View для отображения профиля пользователя
     """
@@ -17,13 +17,16 @@ class ProfileDetailView(DetailView):
     model = AdvancedUser
     template_name = "accounts/profile.html"
     context_object_name = "user_info"
-    query_pk_and_slug = True
+    # query_pk_and_slug = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
         context['heading'] = 'Профиль'
         return context
+
+    def get_queryset(self):
+        return AdvancedUser.objects.filter(id=self.request.user.id)
 
 
 class LoginView(View):
@@ -151,10 +154,10 @@ class GroupStudentListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['form'] = ''
-        group = StudyGroup.objects.filter(id=self.kwargs['pk']).first()
+        group = StudyGroup.objects.filter(id=self.kwargs['pk']).first().name
         # print(group.name)
-        context['title'] = f'Ученики группы {group.name}'
-        context['heading'] = f'Ученики группы {group.name}'
+        context['title'] = f'Ученики группы {group}'
+        context['heading'] = f'Ученики группы {group}'
         return context
 
     def get_queryset(self):

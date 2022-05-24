@@ -41,7 +41,7 @@ class RegisterForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].label = 'Название компании'
+        self.fields['username'].label = 'Логин'
         self.fields['password'].label = 'Пароль'
         self.fields['confirm_password'].label = 'Подтвердить пароль'
         self.fields['email'].label = 'Электронная почта'
