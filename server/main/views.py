@@ -5,7 +5,7 @@ from .forms import TestModelForm, QuestionModelForm, PassingTestForm
 from .services import TestResultService
 from django.http import Http404
 from django.forms import formset_factory
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -21,16 +21,17 @@ class PassingTestView(View):
     def __init__(self, *args, **kwargs):
         super(PassingTestView, self).__init__(*args, **kwargs)
         self.new_result = Result(
-            test_id=self.get_object(),
+            test_id=Test.objects.get(pk=kwargs['pk']),
             student_id=AdvancedUser.objects.get(pk=self.request.user.id)
         )
 
     def get_object(self):
-        try:
-            obj = Test.objects.get(pk=self.kwargs['pk'])
-        except Test:
-            raise Http404('Тест не найден!')
-        return obj
+        return Result.objects.get(pk=self.kwargs['pk'])
+        # try:
+        # return get_object_or_404(Test, self.kwargs['pk'])
+        # except Exception:
+        #     raise Http404('Тест не найден!')
+        # return obj
 
     def get_context_data(self, **kwargs):
         kwargs['test'] = self.get_object()
@@ -64,7 +65,16 @@ class PassingTestView(View):
 
 
 class ResultDetailView(DetailView):
-    pass
+    model = Result
+    query_pk_and_slug = True
+    template_name = 'main/test-result.html'
+    context_object_name = 'result_info'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Результат теста'
+        context['heading'] = 'Результат теста'
+        return context
 
 
 class TestListView(ListView):
