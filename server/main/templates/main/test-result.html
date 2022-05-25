@@ -2,6 +2,12 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <h2>{{ heading }}</h2>
-    <p>Результат тестирования:</p>
-</form>
+<p>Результат тестирования:</p>
+    <p class="p_center form_margin">Был пройден тест «АБОБА»</p>
+    <p class="p_center form_margin">Студент «Бабайкин»</p>
+    <p class="p_center form_margin">Результат: ваше_число</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
+        <button type="button" class="btn btn-outline-secondary">Перейти к общим результатам</button>
+        <button type="button" class="btn btn-outline-primary">На главную</button>
+    </div>
 {% endblock content %}
