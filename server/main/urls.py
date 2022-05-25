@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import TestCreateView, TestListView, QuestionListView, QuestionCreateView, QuestionUpdateView, \
-    QuestionDeleteView, TestDetailView, TestUpdateView, TestDeleteView, PassingTestView
+    QuestionDeleteView, TestDetailView, TestUpdateView, TestDeleteView, PassingTestView, ResultDetailView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -16,6 +16,7 @@ urlpatterns = [
     path('test/<slug:pk>/delete/', TestDeleteView.as_view(), name='delete_test'),
     path('test/<slug:pk>/about/', TestDetailView.as_view(), name='about_test'),
     path('test/<slug:pk>/pass/', PassingTestView.as_view(), name='pass_test'),
+    path('result/<slug:pk>/info/', ResultDetailView.as_view(), name='test_result'),
     #  Question Urls
     path('test/<slug:test_id>/quest/list/', QuestionListView.as_view(), name='quest_list'),
     path('test/<slug:test_id>/quest/create/', QuestionCreateView.as_view(), name='create_quest'),

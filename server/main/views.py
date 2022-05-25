@@ -1,10 +1,12 @@
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, View
+from .models import Test, Question, Result
+from accounts.models import AdvancedUser
+from .forms import TestModelForm, QuestionModelForm, PassingTestForm
+from .services import TestResultService
 from django.http import Http404
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, View
-from .models import Test, Question
-from .forms import TestModelForm, QuestionModelForm, PassingTestForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -16,7 +18,12 @@ class PassingTestView(View):
     """
     template_name = 'main/test-pass-form.html'
 
-    # query_pk_and_slug = True
+    def __init__(self, *args, **kwargs):
+        super(PassingTestView, self).__init__(*args, **kwargs)
+        self.new_result = Result(
+            test_id=self.get_object(),
+            student_id=AdvancedUser.objects.get(pk=self.request.user.id)
+        )
 
     def get_object(self):
         try:
@@ -29,11 +36,11 @@ class PassingTestView(View):
         kwargs['test'] = self.get_object()
         kwargs['title'] = f'Тест {kwargs["test"].name}'
         kwargs['heading'] = f'Тест {kwargs["test"].name}'
-        # quest_count = 5
         new_questions = Question.objects.filter(test_id=self.get_object())
+
         if 'form' not in kwargs:
             kwargs['form'] = PassingTestForm(questions=new_questions)
-
+        self.new_result.save()
         return kwargs
 
     def get(self, request, *args, **kwargs):
@@ -45,51 +52,19 @@ class PassingTestView(View):
 
         if form.is_valid():
             print('VALID!!!!!!!')
-
-            # print(f'!!!!!!!! {formset.forms[0].fields} !!!!!!')
-            print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
-            # return redirect('main:home')  #  Redirect на результат
-
+            # print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
+            result = TestResultService(form, new_questions).get_result()
+            self.new_result.result_value = result
+            self.new_result.save()
+            return redirect('main:home')  #  Redirect на результат
         context = {
             'form': form
         }
         return render(request, self.template_name, self.get_context_data(**context))
 
-    # def get_context_data(self, **kwargs):
-    #     kwargs['test'] = self.get_object()
-    #     kwargs['title'] = f'Тест {kwargs["test"].name}'
-    #     kwargs['heading'] = f'Тест {kwargs["test"].name}'
-    #     quest_count = 5
-    #     if 'formset' not in kwargs:
-    #         kwargs['formset'] = formset_factory(PassingTestForm, extra=quest_count)
-    #
-    #     # if 'form' not in kwargs:
-    #     #     kwargs['form'] = PassingTestForm()
-    #     # if 'response_form' not in kwargs:
-    #     #     kwargs['response_form'] = ResponseForm()
-    #     # if 'comment_form' not in kwargs:
-    #     #     kwargs['comment_form'] = CommentForm()
-    #     return kwargs
-    #
-    # def get(self, request, *args, **kwargs):
-    #     return render(request, self.template_name, self.get_context_data())
-    #
-    # def post(self, request, *args, **kwargs):
-    #     quest_count = 5
-    #     # formset = PassingTestForm(request.POST)
-    #     quest_form_set = formset_factory(PassingTestForm, extra=quest_count)
-    #     formset = quest_form_set(request.POST)
-    #
-    #     if formset.is_valid():
-    #         print('VALID!!!!!!!')
-    #         print(f'!!!!!!!! {formset.forms[0].fields} !!!!!!')
-    #         # print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
-    #         # return redirect('main:home')  #  Redirect на результат
-    #
-    #     context = {
-    #         'formset': formset
-    #     }
-    #     return render(request, self.template_name, self.get_context_data(**context))
+
+class ResultDetailView(DetailView):
+    pass
 
 
 class TestListView(ListView):
