@@ -2,12 +2,12 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<h2> {{ heading }}</h2>
+<h2> {{ heading }} теста "Название теста"</h2> <!-- Добавить название теста, иначе можно запутатся. -->
 <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
     <thead>
     <tr>
-        <th scope="col">Информация о вопросе</th>
-        <th scope="col" colspan="2">
+        <th scope="col">Вопрос</th>
+        <th scope="col">
             <button type="button" class="btn btn-outline-primary"
                     onclick="window.location.href='{% url 'main:create_quest' test_id=test_id %}'">
                 Добавить вопрос
@@ -21,8 +21,7 @@
         <td>{{ el.info }}</td>
         <!-- Icons -->
         <td><a href="{% url 'main:update_quest' test_id=test_id pk=el.pk %}" class="fas fa-pen-square fa-2x"></a>
-        </td>
-        <td><a href="{% url 'main:delete_quest' test_id=test_id pk=el.pk %}" class="fas fa-backspace fa-2x"></a></td>
+        <a href="{% url 'main:delete_quest' test_id=test_id pk=el.pk %}" class="fas fa-backspace fa-2x"></a></td>
     </tr>
     {% endfor %}
     </tbody>

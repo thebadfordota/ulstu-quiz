@@ -230,3 +230,17 @@ header {
     margin-right: auto;
     margin-top: 20px;
 }
+
+.about_justify {
+    text-align: justify;
+    text-align-last: left;
+    text-indent: 2em;
+}
+
+.p_center {
+    text-indent: 0;
+}
+
+.form_margin {
+    margin: 0 1em 1em 1em;
+}
