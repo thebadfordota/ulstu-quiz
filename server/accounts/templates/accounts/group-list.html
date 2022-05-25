@@ -7,12 +7,12 @@
     <thead>
     <tr>
         <th scope="col">Название группы</th>
-<!--        <th scope="col">-->
-<!--            <button type="button" class="btn btn-outline-primary"-->
-<!--                    onclick="window.location.href='{% url 'accounts:create_group' %}'">-->
-<!--                Добавить группу-->
-<!--            </button>-->
-<!--        </th>-->
+        <th scope="col">
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="window.location.href='{% url 'accounts:create_group' %}'">
+                Добавить группу
+            </button>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -20,9 +20,8 @@
     <tr>
         <td><a href="{% url 'accounts:group_student_list' pk=el.pk %}">{{ el.name }}</a></td>
         <!-- Icons -->
-<!--        <td><a href="{% url 'accounts:update_group' pk=el.pk %}" class="fas fa-pen-square fa-2x"></a>-->
-<!--        </td>-->
-<!--        <td><a href="{% url 'accounts:delete_group' pk=el.pk %}" class="fas fa-backspace fa-2x"></a></td>-->
+        <td><a href="{% url 'accounts:update_group' pk=el.pk %}" class="fas fa-pen-square fa-2x"></a>
+        <a href="{% url 'accounts:delete_group' pk=el.pk %}" class="fas fa-backspace fa-2x"></a></td>
     </tr>
     {% endfor %}
     </tbody>

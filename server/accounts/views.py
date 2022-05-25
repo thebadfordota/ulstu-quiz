@@ -75,7 +75,7 @@ class StudyGroupListView(ListView):
     """
     View для списка групп.
     """
-    paginate_by = 10
+    paginate_by = 6
     model = StudyGroup
     template_name = "accounts/group-list.html"
     context_object_name = "group_info"

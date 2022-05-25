@@ -62,9 +62,7 @@ p {
 
 .main_welcome {
     display: flex;
-    margin: auto;
-    margin-top: 30px;
-    margin-bot: 25px;
+    margin: 30px auto 25px;
     flex-direction: column;
     background-size: cover;
     background-position: 50% 50%;
@@ -235,6 +233,7 @@ header {
     text-align: justify;
     text-align-last: left;
     text-indent: 2em;
+    margin-top: 1em;
 }
 
 .p_center {
@@ -247,4 +246,14 @@ header {
 
 .list-h5 {
     margin: 0.5rem auto;
+}
+
+.filter_block {
+    display: block;
+    min-width: 23rem;
+}
+
+.filter_margin {
+    margin: 1rem 1rem 0 1rem;
+    text-align: left;
 }

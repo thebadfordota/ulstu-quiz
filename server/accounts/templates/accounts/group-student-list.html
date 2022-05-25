@@ -11,17 +11,16 @@
         <th scope="col">Отчество</th>
         <th scope="col">Логин</th>
         <th scope="col">
-
         </th>
     </tr>
     </thead>
     <tbody>
     {% for el in student_info %}
     <tr>
-        <td><a href="{% url 'accounts:student_result_list' pk=el.pk %}">{{ el.last_name }}</a></td>
-        <td><a href="">{{ el.first_name }}</a></td>
-        <td><a href="">{{ el.patronymic }}</a></td>
-        <td><a href="">{{ el.username }}</a></td>
+        <td>{{ el.last_name }}</td>
+        <td>{{ el.first_name }}</td>
+        <td>{{ el.patronymic }}</td>
+        <td>{{ el.username }}</td>
         <!-- Icons -->
 <!--        <td><a href="" class="fas fa-pen-square fa-2x"></a></td>-->
         <td>
