@@ -18,7 +18,7 @@ class Test(BaseModel):
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
     hide_test = models.BooleanField(default=False, blank=True, verbose_name='Скрыть тест')
     image = models.ImageField(null=True, blank=True, verbose_name='Фотография теста')
-    group_id = models.ManyToManyField(StudyGroup, null=True, blank=True, verbose_name='Для следующих учебных групп')
+    group_id = models.ManyToManyField(StudyGroup, blank=True, verbose_name='Для следующих учебных групп')
 
     class Meta:
         verbose_name_plural = 'Тесты'
@@ -54,7 +54,6 @@ class Result(BaseModel):
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
     test_id = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
     student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")  # Подумать
-
     class Meta:
         verbose_name_plural = 'Попытки прохождения'
         verbose_name = 'Попытка прохождения'
