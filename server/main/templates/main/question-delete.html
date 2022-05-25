@@ -1,15 +1,17 @@
 {% extends 'main/base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<h2>{{ heading }}</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>Вы действительно хотите удалить вопрос: <br> "{{ object.info }}" ?</p>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-danger">Удалить</button>
-        <button type="button" class="btn btn-outline-primary"><a
-                href="{% url 'main:quest_list' test_id=test_id %}">Отмена</a>
-        </button>
-    </div>
-</form>
+<div class="border border-4">
+    <h2 class="border-bottom">{{ heading }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p class="p_center form_margin">Вы действительно хотите удалить вопрос: <br> "{{ object.info }}" ?</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="window.location.href='{% url 'main:quest_list' test_id=test_id %}'">Отмена
+            </button>
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </div>
+    </form>
+</div>
 {% endblock content %}
