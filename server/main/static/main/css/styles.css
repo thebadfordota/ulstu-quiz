@@ -127,7 +127,7 @@ header {
     background-color: #686868;
     min-height: 65px;
     margin-top: 0;
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     font-size: 20px;
 }
 
@@ -256,4 +256,24 @@ header {
 .filter_margin {
     margin: 1rem 1rem 0 1rem;
     text-align: left;
+}
+
+.invisible_input {
+    display: none;
+}
+
+.invisible_input ~ label.form-check-label {
+    margin-left: -1.5rem;
+    font-size: 1.2em;
+    margin-top: 25px;
+    border-bottom: solid;
+}
+
+.visible__input ~ label.form-check-label {
+    font-weight: bold;
+}
+
+.test_form {
+    padding: 0 25rem 1.5rem 1.5rem;
+    color: black;
 }

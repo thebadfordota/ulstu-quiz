@@ -14,7 +14,7 @@ class PassingTestView(View):
     """
     View для прохождения теста.
     """
-    template_name = 'main/form-template.html'
+    template_name = 'main/test-pass-form.html'
 
     # query_pk_and_slug = True
 

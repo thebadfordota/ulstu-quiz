@@ -5,12 +5,9 @@
 {% block content %}
 <div class="container">
     <h2>{{ heading }}</h2>
-    <form action="" method="POST" style="margin: 0 auto;" class="" id="id-exampleForm">
-        {{ formset.managment_form }}
+    <form action="" method="POST" style="margin: 0 auto;" class="uniForm blueForms test_form border border-2 border-info" id="id-exampleForm">
         {% csrf_token %}
-        {% for form in formset %}
-           {{ form }}
-       {% endfor %}
+        {{ form|crispy }}
         <input type="submit" class="btn btn-primary" value="Подтвердить">
     </form>
 </div>
