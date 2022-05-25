@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<div class="container">
+    <h2>{{ heading }}</h2>
+    <form action="" method="POST" style="margin: 0 auto;" class="" id="id-exampleForm">
+        {{ formset.managment_form }}
+        {% csrf_token %}
+        {% for form in formset %}
+           {{ form }}
+       {% endfor %}
+        <input type="submit" class="btn btn-primary" value="Подтвердить">
+    </form>
+</div>
+{% endblock %}
