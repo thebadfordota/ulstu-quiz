@@ -23,11 +23,11 @@
         <td><a href="">{{ el.patronymic }}</a></td>
         <td><a href="">{{ el.username }}</a></td>
         <!-- Icons -->
-        <td><a href="" class="fas fa-pen-square fa-2x"></a>
+<!--        <td><a href="" class="fas fa-pen-square fa-2x"></a></td>-->
         <td>
             <button type="button" class="btn btn-outline-primary"
                     onclick="window.location.href='{% url 'accounts:student_result_list' pk=el.pk %}'">
-                успеваемость
+                Успеваемость
             </button>
         </td>
     </tr>

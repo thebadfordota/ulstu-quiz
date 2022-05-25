@@ -242,5 +242,9 @@ header {
 }
 
 .form_margin {
-    margin: 0 1em 1em 1em;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.list-h5 {
+    margin: 0.5rem auto;
 }
