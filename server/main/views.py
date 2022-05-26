@@ -20,28 +20,30 @@ class PassingTestView(View):
 
     def __init__(self, *args, **kwargs):
         super(PassingTestView, self).__init__(*args, **kwargs)
-        self.new_result = Result(
-            test_id=Test.objects.get(pk=kwargs['pk']),
-            student_id=AdvancedUser.objects.get(pk=self.request.user.id)
-        )
+        # self.new_result = Result(
+        #     test_id=None,
+        #     student_id=None,
+        # )
 
     def get_object(self):
-        return Result.objects.get(pk=self.kwargs['pk'])
-        # try:
-        # return get_object_or_404(Test, self.kwargs['pk'])
-        # except Exception:
-        #     raise Http404('Тест не найден!')
-        # return obj
+        try:
+            obj = Test.objects.get(pk=self.kwargs['pk'])
+        except Exception:
+            raise Http404('Тест не найден!')
+        return obj
 
     def get_context_data(self, **kwargs):
         kwargs['test'] = self.get_object()
         kwargs['title'] = f'Тест {kwargs["test"].name}'
         kwargs['heading'] = f'Тест {kwargs["test"].name}'
         new_questions = Question.objects.filter(test_id=self.get_object())
-
+        # if not self.new_result.test_id:
+        # self.new_result.test_id = kwargs['test']
+        # if not self.new_result.student_id:
+        # self.new_result.student_id = AdvancedUser.objects.get(pk=self.request.user.id)
+        # self.new_result.save()
         if 'form' not in kwargs:
             kwargs['form'] = PassingTestForm(questions=new_questions)
-        self.new_result.save()
         return kwargs
 
     def get(self, request, *args, **kwargs):
@@ -54,10 +56,17 @@ class PassingTestView(View):
         if form.is_valid():
             print('VALID!!!!!!!')
             # print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
-            result = TestResultService(form, new_questions).get_result()
-            self.new_result.result_value = result
-            self.new_result.save()
-            return redirect('main:home')  #  Redirect на результат
+            # result = TestResultService(form, new_questions).get_result()
+            new_result = Result(
+                test_id=self.get_object(),
+                student_id=AdvancedUser.objects.get(pk=self.request.user.id),
+                result_value=TestResultService(form, new_questions).get_result()
+            )
+            # self.new_result.result_value = result
+            # self.new_result.test_id = self.get_object()
+            # self.new_result.student_id = AdvancedUser.objects.get(pk=self.request.user.id)
+            new_result.save()
+            return redirect('main:home')  # Redirect на результат
         context = {
             'form': form
         }
