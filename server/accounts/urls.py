@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import ProfileListView, LoginView, RegisterUserCreateView, StudyGroupListView, StudyGroupCreateView, \
-    StudyGroupUpdateView, StudyGroupDeleteView, GroupStudentListView, StudentResultListView
+    StudyGroupUpdateView, StudyGroupDeleteView, GroupStudentListView, StudentResultListView, ProfileUpdateView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -10,6 +10,8 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('profile/', ProfileListView.as_view(), name='profile'),
+    path('profile/update/', ProfileUpdateView.as_view(), name='update_profile'),
+
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterUserCreateView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(next_page='main:home'), name='logout'),

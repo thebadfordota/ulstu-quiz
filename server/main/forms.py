@@ -2,6 +2,21 @@ from django import forms
 from .models import Test, Question
 
 
+class TestFilterForm(forms.Form):
+    """
+    Форма для фильтрации полей модели 'Product'.
+    """
+    name = forms.CharField(label="Название", required=False, widget=forms.TextInput(attrs={
+        'class': 'col form-control', 'placeholder': 'Название'
+    }))
+    theme = forms.CharField(label="Тема", required=False, widget=forms.TextInput(attrs={
+        'class': 'col form-control', 'placeholder': 'Тема'
+    }))
+    author = forms.CharField(label="Автор", required=False, widget=forms.TextInput(attrs={
+        'class': 'col form-control', 'placeholder': 'Автор'
+    }))
+
+
 class TestModelForm(forms.ModelForm):
     """
     Форма для CRUD-операция с моделью Test.
@@ -26,19 +41,6 @@ class PassingTestForm(forms.Form):
     """
     Форма для прохождения теста.
     """
-
-    # variant_1 = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={
-    #     'class': 'check__input'
-    # }))
-    # variant_2 = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={
-    #     'class': 'check__input'
-    # }))
-    # variant_3 = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={
-    #     'class': 'check__input'
-    # }))
-    # variant_4 = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={
-    #     'class': 'check__input'
-    # }))
 
     def __init__(self, *args, **kwargs):
         questions = kwargs.pop('questions')
@@ -87,8 +89,3 @@ class PassingTestForm(forms.Form):
                 }),
                 label=question.variant_4)
             index += 4
-
-
-    # class Meta:
-    #     model = Question
-    #     fields = ['variant_1', 'variant_2', 'variant_3', 'variant_4']

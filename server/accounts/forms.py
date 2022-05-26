@@ -77,3 +77,12 @@ class StudyGroupModelForm(forms.ModelForm):
     class Meta:
         model = StudyGroup
         fields = '__all__'
+
+
+class AdvancedUserModelForm(forms.ModelForm):
+    """
+    Форма для CRUD-операция с моделью AdvancedUser.
+    """
+    class Meta:
+        model = AdvancedUser
+        fields = ['username', 'last_name', 'first_name', 'patronymic', 'about_user']

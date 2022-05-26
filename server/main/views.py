@@ -1,7 +1,7 @@
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, View
 from .models import Test, Question, Result
 from accounts.models import AdvancedUser
-from .forms import TestModelForm, QuestionModelForm, PassingTestForm
+from .forms import TestModelForm, QuestionModelForm, PassingTestForm, TestFilterForm
 from .services import TestResultService
 from django.http import Http404
 from django.forms import formset_factory
@@ -51,7 +51,7 @@ class PassingTestView(View):
                 result_value=TestResultService(form, new_questions).get_result()
             )
             new_result.save()
-            return redirect('main:test_result', pk=new_result.pk)  # Redirect на результат
+            return redirect('main:test_result', pk=new_result.pk)
         context = {
             'form': form
         }
@@ -84,7 +84,7 @@ class TestListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['form'] = ''
+        context['form'] = TestFilterForm(self.request.GET)
         context['title'] = 'Все тесты'
         context['heading'] = 'Все тесты'
         return context
