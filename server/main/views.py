@@ -69,7 +69,7 @@ class ResultDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Результат тестирования'
         context['heading'] = 'Результат тестирования'
-        # context['user_info'] = AdvancedUser.objects.get(pk=self.object.student_id.id)
+        context['user_info'] = AdvancedUser.objects.get(pk=self.object.student_id.id)
         return context
 
 

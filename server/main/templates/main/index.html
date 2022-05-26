@@ -35,9 +35,17 @@
                     <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
                 </ul>
                 <div class="card-body btn-group btn-group-lg">
-                    <button type="button" class="btn btn-outline-primary" style="" onclick="window.location.href='{% url 'main:about_test' pk=el.pk %}'">Описание
+                    <button
+                            type="button"
+                            class="btn btn-outline-primary"
+                            onclick="window.location.href='{% url 'main:about_test' pk=el.pk %}'"
+                    >Описание
                     </button>
-                    <button type="button" class="btn btn-outline-success" style="" onclick="">Начать тест
+                    <button
+                            type="button"
+                            class="btn btn-outline-success"
+                            onclick="window.location.href='{% url 'main:pass_test' pk=el.pk %}'"
+                    >Начать тест
                     </button>
                 </div>
             </div>

@@ -14,9 +14,7 @@
     {% for el in result_info %}
     <tr>
         <td>{{ el.appearance_date }}</td>
-        <td><a href="{% url 'main:about_test' pk=el.pk %}">{{ el.test_id }}</a></td>
-        <!-- Icons -->
-        <td><a href="" class="fas fa-pen-square fa-2x"></a>
+        <td><a href="{% url 'main:about_test' pk=el.test_id.pk %}">{{ el.test_id }}</a></td>
     </tr>
     {% endfor %}
     </tbody>

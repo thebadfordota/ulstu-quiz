@@ -25,5 +25,5 @@ class TestResultService:
                 self.result += 1
 
             i += 4
-        return self.result / self.quest_count
+        return round(self.result / self.quest_count, 2)
         # print(self.form.cleaned_data[f'{self.field_keys[5]}'])

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<h2>{{ heading }} «{{ test_info.name }}»</h2>
+<h2>{{ heading }} <a href="{% url 'main:quest_list' test_id=test_info.pk %}">«{{ test_info.name }}»</a></h2>
 <div class="main_center">
     <div class="about_left col" style="margin-right: 4rem">
         <img src='{% static "main/images/insurance-default-image.jpg" %}'
@@ -32,14 +32,14 @@
                         <h5 class="list-h5">Дата создания: {{ test_info.appearance_date }}</h5>
                     </div>
                 </div>
-                <div class="list-group-item list-group-item-action" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <button type="button" class="btn btn-outline-success justify-content-between d-flex btn-lg" style="
-margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:quest_list' test_id=test_info.pk %}'">
-                            Список вопросов
-                        </button>
-                    </div>
-                </div>
+<!--                <div class="list-group-item list-group-item-action" aria-current="true">-->
+<!--                    <div class="d-flex w-100 justify-content-between">-->
+<!--                        <button type="button" class="btn btn-outline-success justify-content-between d-flex btn-lg" style="-->
+<!--margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:quest_list' test_id=test_info.pk %}'">-->
+<!--                            Список вопросов-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="list-group-item list-group-item-action" aria-current="true">
                     <div class="btn-group btn-group-lg col-12 mx-auto" role="group" aria-label="buttons">
                         <button type="button" class="btn btn-outline-primary justify-content-between d-flex" style="
@@ -49,6 +49,19 @@ margin-top: 20px; margin: 0 auto; text-align: center" onclick="window.location.h
                         <button type="button" class="btn btn-outline-danger justify-content-between d-flex" style="
 margin-top: 20px; margin: 0 auto; text-align: center" onclick="window.location.href='{% url 'main:delete_test' pk=test_info.pk %}'">
                             Удалить тест
+                        </button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <button
+                                type="button"
+                                class="btn btn-outline-success justify-content-between d-flex btn-lg"
+                                style="
+margin-top: 20px; margin: 0 auto;"
+                                onclick="window.location.href='{% url 'main:pass_test' pk=test_info.pk %}'"
+                        >
+                            Пройти тест
                         </button>
                     </div>
                 </div>
