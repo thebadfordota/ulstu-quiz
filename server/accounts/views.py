@@ -1,7 +1,7 @@
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView, DetailView
 from .models import AdvancedUser, StudyGroup
 from main.models import Result
-from .forms import LoginForm, RegisterForm, StudyGroupModelForm
+from .forms import LoginForm, RegisterForm, StudyGroupModelForm, AdvancedUserModelForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
@@ -28,6 +28,26 @@ class ProfileListView(ListView):
 
     def get_queryset(self):
         return AdvancedUser.objects.filter(id=self.request.user.id).first()
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfileUpdateView(UpdateView):
+    model = AdvancedUser
+    template_name = 'main/form-template.html'
+    form_class = AdvancedUserModelForm
+    # query_pk_and_slug = True
+
+    def get_object(self, queryset=None):
+        return AdvancedUser.objects.get(pk=self.request.user.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Обновить информацию о пользователе'
+        context['heading'] = 'Обновить информацию о пользователе'
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('accounts:profile')
 
 
 class LoginView(View):

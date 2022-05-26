@@ -39,10 +39,18 @@
                 </div>
                 <div class="list-group-item list-group-item-action" aria-current="true">
                     <div class="btn-group d-flex w-100 justify-content-center">
-                        <button type="button" class="btn btn-outline-primary justify-content-center d-flex col-6" onclick="">
-                            Редактировать профиль
-                        </button>
-                        <button type="button" class="btn btn-outline-success justify-content-center d-flex col-6" onclick="">
+<!--                        <button-->
+<!--                                type="button"-->
+<!--                                class="btn btn-outline-primary justify-content-center d-flex col-6"-->
+<!--                                onclick=""-->
+<!--                        >-->
+<!--                            Редактировать профиль-->
+<!--                        </button>-->
+                        <button
+                                type="button"
+                                class="btn btn-outline-success justify-content-center d-flex col-6" style="padding: 1em 0"
+                                onclick="window.location.href='{% url 'accounts:student_result_list' pk=user.id %}'"
+                        >
                             Успеваемость
                         </button>
                     </div>

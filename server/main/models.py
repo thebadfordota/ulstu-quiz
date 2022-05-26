@@ -53,11 +53,13 @@ class Question(BaseModel):
 class Result(BaseModel):
     appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
     test_id = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
-    student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")  # Подумать
+    student_id = models.ForeignKey(AdvancedUser, on_delete=models.CASCADE, verbose_name="Студент")
+    result_value = models.FloatField(blank=True, null=True, verbose_name='Результат')
+
     class Meta:
         verbose_name_plural = 'Попытки прохождения'
         verbose_name = 'Попытка прохождения'
         ordering = ['id']
 
     def __str__(self):
-        return f'{self.appearance_date} {self.test_id} {self.student_id}'
+        return f'Студент: {self.student_id} / Время: {self.appearance_date}'

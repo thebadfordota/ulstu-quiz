@@ -1,13 +1,23 @@
 {% extends 'main/base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<h2>{{ heading }}</h2>
-<p>Результат тестирования:</p>
-    <p class="p_center form_margin">Был пройден тест «АБОБА»</p>
-    <p class="p_center form_margin">Студент «Бабайкин»</p>
-    <p class="p_center form_margin">Результат: ваше_число</p>
-    <div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
-        <button type="button" class="btn btn-outline-secondary">Перейти к общим результатам</button>
-        <button type="button" class="btn btn-outline-primary">На главную</button>
-    </div>
+<h2 style="margin-bottom: 2em;">{{ heading }}</h2>
+<p class="p_center form_margin">Был пройден тест «{{ result_info.test_id }}»</p>
+<p class="p_center form_margin">Тема: {{ result_info.test_id.theme }}</p>
+<p class="p_center form_margin">Студент: {{ user_info.last_name }} {{ user_info.first_name }} {{ user_info.patronymic }}</p>
+<p class="p_center form_margin">Группа: {{ user_info.group_id}}</p>
+<p class="p_center form_margin">Результат: {{ result_info.result_value }}</p>
+<div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
+    <button
+            type="button"
+            class="btn btn-outline-success"
+            onclick="window.location.href='{% url 'accounts:student_result_list' pk=user_info.id %}'"
+    >Перейти к общим результатам
+    </button>
+    <button
+            type="button"
+            class="btn btn-outline-primary"
+            onclick="window.location.href='{% url 'main:home' %}'"
+    >На главную</button>
+</div>
 {% endblock content %}

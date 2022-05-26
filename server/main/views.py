@@ -1,10 +1,12 @@
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, View
+from .models import Test, Question, Result
+from accounts.models import AdvancedUser
+from .forms import TestModelForm, QuestionModelForm, PassingTestForm, TestFilterForm
+from .services import TestResultService, TestFilterService
 from django.http import Http404
 from django.forms import formset_factory
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, View
-from .models import Test, Question
-from .forms import TestModelForm, QuestionModelForm, PassingTestForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -16,12 +18,13 @@ class PassingTestView(View):
     """
     template_name = 'main/test-pass-form.html'
 
-    # query_pk_and_slug = True
+    def __init__(self, *args, **kwargs):
+        super(PassingTestView, self).__init__(*args, **kwargs)
 
     def get_object(self):
         try:
             obj = Test.objects.get(pk=self.kwargs['pk'])
-        except Test:
+        except Exception:
             raise Http404('Тест не найден!')
         return obj
 
@@ -29,11 +32,9 @@ class PassingTestView(View):
         kwargs['test'] = self.get_object()
         kwargs['title'] = f'Тест {kwargs["test"].name}'
         kwargs['heading'] = f'Тест {kwargs["test"].name}'
-        # quest_count = 5
         new_questions = Question.objects.filter(test_id=self.get_object())
         if 'form' not in kwargs:
             kwargs['form'] = PassingTestForm(questions=new_questions)
-
         return kwargs
 
     def get(self, request, *args, **kwargs):
@@ -44,52 +45,32 @@ class PassingTestView(View):
         form = PassingTestForm(request.POST, questions=new_questions)
 
         if form.is_valid():
-            print('VALID!!!!!!!')
-
-            # print(f'!!!!!!!! {formset.forms[0].fields} !!!!!!')
-            print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
-            # return redirect('main:home')  #  Redirect на результат
-
+            new_result = Result(
+                test_id=self.get_object(),
+                student_id=AdvancedUser.objects.get(pk=self.request.user.id),
+                result_value=TestResultService(form, new_questions).get_result()
+            )
+            new_result.save()
+            return redirect('main:test_result', pk=new_result.pk)
         context = {
             'form': form
         }
         return render(request, self.template_name, self.get_context_data(**context))
 
-    # def get_context_data(self, **kwargs):
-    #     kwargs['test'] = self.get_object()
-    #     kwargs['title'] = f'Тест {kwargs["test"].name}'
-    #     kwargs['heading'] = f'Тест {kwargs["test"].name}'
-    #     quest_count = 5
-    #     if 'formset' not in kwargs:
-    #         kwargs['formset'] = formset_factory(PassingTestForm, extra=quest_count)
-    #
-    #     # if 'form' not in kwargs:
-    #     #     kwargs['form'] = PassingTestForm()
-    #     # if 'response_form' not in kwargs:
-    #     #     kwargs['response_form'] = ResponseForm()
-    #     # if 'comment_form' not in kwargs:
-    #     #     kwargs['comment_form'] = CommentForm()
-    #     return kwargs
-    #
-    # def get(self, request, *args, **kwargs):
-    #     return render(request, self.template_name, self.get_context_data())
-    #
-    # def post(self, request, *args, **kwargs):
-    #     quest_count = 5
-    #     # formset = PassingTestForm(request.POST)
-    #     quest_form_set = formset_factory(PassingTestForm, extra=quest_count)
-    #     formset = quest_form_set(request.POST)
-    #
-    #     if formset.is_valid():
-    #         print('VALID!!!!!!!')
-    #         print(f'!!!!!!!! {formset.forms[0].fields} !!!!!!')
-    #         # print(f'!!!!!!!! {form.cleaned_data} !!!!!!')
-    #         # return redirect('main:home')  #  Redirect на результат
-    #
-    #     context = {
-    #         'formset': formset
-    #     }
-    #     return render(request, self.template_name, self.get_context_data(**context))
+
+@method_decorator(login_required, name='dispatch')
+class ResultDetailView(DetailView):
+    model = Result
+    query_pk_and_slug = True
+    template_name = 'main/test-result.html'
+    context_object_name = 'result_info'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Результат тестирования'
+        context['heading'] = 'Результат тестирования'
+        context['user_info'] = AdvancedUser.objects.get(pk=self.object.student_id.id)
+        return context
 
 
 class TestListView(ListView):
@@ -103,13 +84,14 @@ class TestListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['form'] = ''
+        context['form'] = TestFilterForm(self.request.GET)
         context['title'] = 'Все тесты'
         context['heading'] = 'Все тесты'
         return context
 
     def get_queryset(self):
-        return Test.objects.filter(hide_test=False)
+        return TestFilterService(TestFilterForm(self.request.GET)).get_filtered_fields()
+        # return Test.objects.filter(hide_test=False)
 
 
 class TestDetailView(DetailView):
