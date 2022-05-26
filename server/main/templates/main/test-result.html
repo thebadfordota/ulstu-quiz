@@ -1,13 +1,12 @@
 {% extends 'main/base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<h2>{{ heading }}</h2>
-<p>Результат тестирования:</p>
-    <p class="p_center form_margin">Был пройден тест «{{ test_info.test_id }}»</p>
-    <p class="p_center form_margin">Студент «{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}»</p>
-    <p class="p_center form_margin">Результат: {{ test_info.result_value }}</p>
-    <div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
-        <button type="button" class="btn btn-outline-secondary">Перейти к общим результатам</button>
-        <button type="button" class="btn btn-outline-primary">На главную</button>
-    </div>
+<h2 style="margin-bottom: 2em;">{{ heading }}</h2>
+<p class="p_center form_margin">Был пройден тест «{{ result_info.test_id }}»</p>
+<p class="p_center form_margin">Студент: {{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</p>
+<p class="p_center form_margin">Результат: {{ result_info.result_value }}</p>
+<div class="d-grid gap-2 d-md-flex justify-content-center border-top" style="padding: 1rem 0">
+    <button type="button" class="btn btn-outline-success">Перейти к общим результатам</button>
+    <button type="button" class="btn btn-outline-primary">На главную</button>
+</div>
 {% endblock content %}
