@@ -12,9 +12,9 @@ class TestFilterForm(forms.Form):
     theme = forms.CharField(label="Тема", required=False, widget=forms.TextInput(attrs={
         'class': 'col form-control', 'placeholder': 'Тема'
     }))
-    author = forms.CharField(label="Автор", required=False, widget=forms.TextInput(attrs={
-        'class': 'col form-control', 'placeholder': 'Автор'
-    }))
+    # author = forms.CharField(label="Автор", required=False, widget=forms.TextInput(attrs={
+    #     'class': 'col form-control', 'placeholder': 'Автор'
+    # }))
 
 
 class TestModelForm(forms.ModelForm):

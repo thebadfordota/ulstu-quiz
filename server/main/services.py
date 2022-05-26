@@ -1,5 +1,6 @@
 from django.conf import settings
 from pymongo import MongoClient
+from .models import Test
 
 
 class TestResultService:
@@ -26,4 +27,19 @@ class TestResultService:
 
             i += 4
         return round(self.result / self.quest_count, 2)
-        # print(self.form.cleaned_data[f'{self.field_keys[5]}'])
+
+
+class TestFilterService:
+    def __init__(self, form):
+        self.form = form
+        self.filtered_test_set = Test.objects.filter(hide_test=False)
+
+    def get_filtered_fields(self):
+        if self.form.is_valid():
+            if self.form.cleaned_data['name']:
+                self.filtered_test_set = self.filtered_test_set.filter(name=self.form.cleaned_data['name'])
+            if self.form.cleaned_data['theme']:
+                self.filtered_test_set = self.filtered_test_set.filter(theme=self.form.cleaned_data['theme'])
+            # if self.form.cleaned_data['author']:
+                # self.filtered_test_set = self.filtered_test_set.filter(author_id=self.form.cleaned_data['author'])
+        return self.filtered_test_set

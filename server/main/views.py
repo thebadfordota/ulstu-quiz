@@ -2,7 +2,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView, D
 from .models import Test, Question, Result
 from accounts.models import AdvancedUser
 from .forms import TestModelForm, QuestionModelForm, PassingTestForm, TestFilterForm
-from .services import TestResultService
+from .services import TestResultService, TestFilterService
 from django.http import Http404
 from django.forms import formset_factory
 from django.shortcuts import render, redirect, get_object_or_404
@@ -90,7 +90,8 @@ class TestListView(ListView):
         return context
 
     def get_queryset(self):
-        return Test.objects.filter(hide_test=False)
+        return TestFilterService(TestFilterForm(self.request.GET)).get_filtered_fields()
+        # return Test.objects.filter(hide_test=False)
 
 
 class TestDetailView(DetailView):
